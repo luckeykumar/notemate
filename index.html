@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="NOTEMATE – India's Premium Academic Writing & Note Service for College Students. B.Tech, BCA, MCA, M.Tech assignments, notes, projects and more." />
+  <title>NOTEMATE – Your Academic Partner</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#" class="nav-logo">
+        <div class="logo-icon">
+          <img src="logo/NoteMate Circular.png" alt="NOTEMATE" style="border-radius:15px;" />
+        </div>
+        <span class="logo-text">NOTEMATE</span>
+      </a>
+
+      <!-- Nav Links (center) -->
+      <nav class="nav-links" id="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#courses" class="nav-link">Courses</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#testimonials" class="nav-link">Reviews</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Right Controls -->
+      <div class="nav-right">
+        <!-- Account Dropdown -->
+        <div class="account-wrapper" id="account-wrapper">
+          <button class="account-btn" id="account-btn" aria-label="Account menu" aria-expanded="false">
+            <div class="avatar-circle" id="avatar-circle">
+              <svg width="20" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <span class="account-name" id="account-name-display">Account</span>
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <div class="account-dropdown" id="account-dropdown" role="menu">
+            <!-- When NOT logged in -->
+            <div id="dropdown-guest" class="dropdown-section">
+              <div class="dropdown-header">
+                <div class="dropdown-avatar-big">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2" />
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="dropdown-title">Welcome!</p>
+                  <p class="dropdown-subtitle">Sign in to continue</p>
+                </div>
+              </div>
+              <button class="dropdown-login-btn" id="open-login-btn" onclick="openModal('loginModal')">Login /
+                Register</button>
+            </div>
+
+            <!-- When logged in (hidden by default) -->
+            <div id="dropdown-user" class="dropdown-section hidden">
+              <div class="dropdown-header">
+                <div class="dropdown-avatar-big logged">
+                  <span id="user-initials">JD</span>
+                </div>
+                <div>
+                  <p class="dropdown-title" id="user-full-name">John Doe</p>
+                  <p class="dropdown-subtitle" id="user-email-display">john@example.com</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <ul class="dropdown-menu-list" role="menu">
+              <li><button class="dd-item" onclick="openModal('paymentModal')" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
+                    <path d="M2 10h20" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Payment
+                </button></li>
+              <li><button class="dd-item" onclick="openModal('settingsModal')" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                    <path
+                      d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"
+                      stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Settings
+                </button></li>
+              <li><button class="dd-item" onclick="openSection('testimonials')" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor"
+                      stroke-width="2" />
+                  </svg>
+                  Reviews
+                </button></li>
+              <li><button class="dd-item" onclick="openModal('helpModal')" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" />
+                    <circle cx="12" cy="17" r="1" fill="currentColor" />
+                  </svg>
+                  Help & Support
+                </button></li>
+              <li><button class="dd-item" onclick="openModal('termsModal')" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor"
+                      stroke-width="2" />
+                    <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" />
+                    <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" />
+                    <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                  Terms & Conditions
+                </button></li>
+              <li class="divider-li">
+                <hr class="dd-divider" />
+              </li>
+              <li><button class="dd-item logout" id="logout-btn" onclick="logoutUser()" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" />
+                    <polyline points="16,17 21,12 16,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" />
+                  </svg>
+                  Log Out
+                </button></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile menu toggle -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge animate-fade-up">✦ Raipur's #1 Academic Writing Service</div>
+      <h1 class="hero-title animate-fade-up delay-1">
+        Your Academic<br /><span class="gradient-text">Success Partner</span>
+      </h1>
+      <p class="hero-subtitle animate-fade-up delay-2">
+        Expert notes, assignments, projects and study materials curated for<br />
+        Indian college students across all major courses.
+      </p>
+      <div class="hero-actions animate-fade-up delay-3">
+        <button class="btn-primary" onclick="scrollToSection('courses')">Explore Courses</button>
+        <button class="btn-ghost" onclick="openModal('loginModal')">Get Started Free</button>
+      </div>
+      <div class="hero-stats animate-fade-up delay-4">
+        <div class="stat">
+          <span class="stat-number" data-target="98">0</span><span>%</span>
+          <span class="stat-label">Satisfaction Rate</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number" data-target="500">0</span><span>+</span>
+          <span class="stat-label">Expert Writers</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURES SECTION ===================== -->
+  <section class="features section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Why Choose Us</span>
+        <h2 class="section-title">Everything You Need to Excel</h2>
+        <p class="section-desc">NOTEMATE brings together the best academic resources, expert writers, and cutting-edge
+          tools to power your academic journey.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3>Expert Writing</h3>
+          <p>Hand-crafted notes and assignments by subject matter experts with 5+ years of academic experience.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+              <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>On-Time Delivery</h3>
+          <p>Never miss a deadline again. We guarantee delivery 24 hours before your submission date.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <path d="M20.618 7.2A10 10 0 1112 22a10 10 0 018.618-14.8" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>100% Original</h3>
+          <p>Plagiarism-free content verified through industry-leading detection tools. Your work is unique.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3>Secure & Private</h3>
+          <p>Your data and orders are encrypted and completely confidential. We never share your information.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" />
+              <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
+              <path d="M23 21v-2a4 4 0 00-3-3.87" stroke="currentColor" stroke-width="2" />
+              <path d="M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <h3>24/7 Support</h3>
+          <p>Round-the-clock assistance from our dedicated support team. We're always here when you need us.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>Affordable Pricing</h3>
+          <p>Student-friendly pricing with flexible plans. Quality academic support that won't break your budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COURSES SECTION ===================== -->
+  <section class="courses section" id="courses">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Courses</span>
+        <h2 class="section-title">Pick Your Course, Book Your Slot</h2>
+        <p class="section-desc">We cover all major Indian college programs — from engineering to management. Select your
+          course and get personalized academic support instantly.</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="course-filters">
+        <button class="filter-btn active" data-filter="all" onclick="filterCourses('all', this)">All Courses</button>
+        <button class="filter-btn" data-filter="engineering"
+          onclick="filterCourses('engineering', this)">Engineering</button>
+        <button class="filter-btn" data-filter="technology"
+          onclick="filterCourses('technology', this)">Technology</button>
+        <button class="filter-btn" data-filter="management"
+          onclick="filterCourses('management', this)">Management</button>
+        <button class="filter-btn" data-filter="science" onclick="filterCourses('science', this)">Science</button>
+        <button class="filter-btn" data-filter="commerce" onclick="filterCourses('commerce', this)">Commerce</button>
+        <button class="filter-btn" data-filter="arts" onclick="filterCourses('arts', this)">Arts</button>
+      </div>
+
+      <div class="courses-grid" id="courses-grid">
+        <!-- Cards generated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="how-it-works section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Process</span>
+        <h2 class="section-title">How NOTEMATE Works</h2>
+        <p class="section-desc">Get your academic work done in 4 simple steps.</p>
+      </div>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" />
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <h3>Create Account</h3>
+          <p>Register for free and complete your profile with your course details and university information.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" />
+              <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <h3>Book a Slot</h3>
+          <p>Choose your course, subject, and preferred time slot. Fill in your project or assignment requirements.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>Expert Works</h3>
+          <p>Our verified subject experts get assigned and work on your material with full dedication and precision.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" />
+              <polyline points="22,4 12,14.01 9,11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>Receive & Succeed</h3>
+          <p>Get your completed work delivered on time. Review, request revisions if needed, and ace your exams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="testimonials section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Reviews</span>
+        <h2 class="section-title">What Students Say</h2>
+        <p class="section-desc">Real reviews from real students who transformed their academic journey with NOTEMATE.
+        </p>
+      </div>
+      <div class="testimonials-slider" id="testimonials-slider">
+        <div class="testimonials-track" id="testimonials-track">
+          <!-- Testimonials generated by JS -->
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="prev-btn" onclick="slideTestimonials(-1)" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="slider-dots" id="slider-dots"></div>
+        <button class="slider-btn" id="next-btn" onclick="slideTestimonials(1)" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT SECTION ===================== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="section-badge">Contact Us</span>
+          <h2 class="section-title left">Let's Connect</h2>
+          <p class="section-desc left">Have questions? Our team is ready to help you 24/7. Reach out through any
+            channel.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 011 2.22 2 2 0 013 .04h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121.96 14l-.04 2.92z"
+                    stroke="currentColor" stroke-width="2" />
+                </svg>
+              </div>
+              <div>
+                <p class="ci-label">Phone</p>
+                <p class="ci-value">+91 9608675705</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                    stroke="currentColor" stroke-width="2" />
+                  <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </div>
+              <div>
+                <p class="ci-label">Email</p>
+                <p class="ci-value">vishwakarmalucky6673@gmail.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2" />
+                  <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </div>
+              <div>
+                <p class="ci-label">Address</p>
+                <p class="ci-value">Sector-29, Naya Raipur, Chhattishgarh</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-box">
+          <form class="contact-form" id="contact-form" onsubmit="submitContactForm(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" id="cf-name" placeholder="Rahul Sharma" required />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="cf-email" placeholder="rahul@example.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Course</label>
+              <select id="cf-course">
+                <option value="">Select your course</option>
+                <option>B.Tech</option>
+                <option>BCA</option>
+                <option>MCA</option>
+                <option>M.Tech</option>
+                <option>MBA</option>
+                <option>BBA</option>
+                <option>B.Sc</option>
+                <option>M.Sc</option>
+                <option>B.Com</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea id="cf-message" rows="4" placeholder="Tell us about your academic needs..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary full-width">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="logo-icon small">
+                <img src="logo/NoteMate Circular.png" alt="NOTEMATE" width="56" height="56" style="border-radius:6px;display:block;" />
+              </div>
+              <span>NOTEMATE</span>
+            </div>
+            <p class="footer-brand-desc">India's premier academic writing and notes service, empowering college students
+              to achieve excellence through expert support.</p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2" />
+                  <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+                </svg>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+                    stroke="currentColor" stroke-width="2" />
+                </svg>
+              </a>
+              <a href="#" class="social-link" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"
+                    stroke="currentColor" stroke-width="2" />
+                  <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" />
+                  <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </a>
+              <a href="#" class="social-link" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M22.54 6.42a2.78 2.78 0 00-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"
+                    stroke="currentColor" stroke-width="2" />
+                  <polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" stroke="currentColor" stroke-width="2"
+                    stroke-linejoin="round" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#courses">Courses</a></li>
+              <li><a href="#tutorials">How It Works</a></li>
+              <li><a href="#testimonials">Reviews</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Courses</h4>
+            <ul>
+              <li><a href="#courses">B.Tech / BE</a></li>
+              <li><a href="#courses">BCA / MCA</a></li>
+              <li><a href="#courses">MBA / BBA</a></li>
+              <li><a href="#courses">B.Sc / M.Sc</a></li>
+              <li><a href="#courses">LLB / LLM</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#" onclick="openModal('helpModal')">Help Center</a></li>
+              <li><a href="#" onclick="openModal('termsModal')">Terms & Conditions</a></li>
+              <li><a href="#" onclick="openModal('privacyModal')">Privacy Policy</a></li>
+              <li><a href="#" onclick="openModal('refundModal')">Refund Policy</a></li>
+              <li><a href="#contact">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2025 NOTEMATE. All rights reserved. | Made with ♥ for Indian Students</p>
+        <p class="footer-disclaimer">NOTEMATE provides academic assistance and reference materials only. Students are
+          responsible for proper usage as per their institution's academic integrity policy.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== MODALS ===================== -->
+
+  <!-- Login/Register Modal -->
+  <div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event, 'loginModal')">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+      <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Close">×</button>
+      <div class="modal-tabs">
+        <button class="modal-tab active" id="login-tab" onclick="switchAuthTab('login')">Login</button>
+        <button class="modal-tab" id="register-tab" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-form-section">
+        <h2 id="login-modal-title" class="modal-title">Welcome Back!</h2>
+        <p class="modal-subtitle">Login to access your dashboard</p>
+        <form onsubmit="loginUser(event)" class="modal-form">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="login-email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-eye-wrap">
+              <input type="password" id="login-password" placeholder="Enter your password" required />
+              <button type="button" class="eye-btn" onclick="togglePassword('login-password', this)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary full-width">Login</button>
+          <div class="modal-divider"><span>or</span></div>
+          <button type="button" class="btn-ghost full-width" onclick="switchAuthTab('register')">Create new account</button>
+        </form>
+      </div>
+
+      <!-- Register Form -->
+      <div id="register-form-section" class="hidden">
+        <h2 class="modal-title">Join NOTEMATE</h2>
+        <p class="modal-subtitle">Create your free account today</p>
+        <form onsubmit="registerUser(event)" class="modal-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" id="reg-firstname" placeholder="Rahul" required />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" id="reg-lastname" placeholder="Sharma" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="reg-email" placeholder="rahul@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="reg-phone" placeholder="+91 XXXXX XXXXX" required />
+          </div>
+          <div class="form-group">
+            <label>Course</label>
+            <select id="reg-course" required>
+              <option value="">Select your course</option>
+              <option>B.Tech</option>
+              <option>BE</option>
+              <option>BCA</option>
+              <option>MCA</option>
+              <option>M.Tech</option>
+              <option>MBA</option>
+              <option>BBA</option>
+              <option>B.Sc</option>
+              <option>M.Sc</option>
+              <option>B.Com</option>
+              <option>M.Com</option>
+              <option>BA</option>
+              <option>MA</option>
+              <option>LLB</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-eye-wrap">
+              <input type="password" id="reg-password" placeholder="Create a strong password" required />
+              <button type="button" class="eye-btn" onclick="togglePassword('reg-password', this)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" required /> I agree to the <a href="#" onclick="openModal('termsModal')">Terms &
+                Conditions</a>
+            </label>
+          </div>
+          <button type="submit" class="btn-primary full-width">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="bookingModal" onclick="closeModalOutside(event, 'bookingModal')">
+    <div class="modal modal-wide" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('bookingModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Book a Slot</h2>
+      <p class="modal-subtitle" id="booking-course-title">B.Tech - Computer Science</p>
+      <form onsubmit="submitBooking(event)" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="book-name" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="book-email" placeholder="Email Address" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="book-phone" placeholder="+91 XXXXX XXXXX" required />
+          </div>
+          <div class="form-group">
+            <label>University / College</label>
+            <input type="text" id="book-college" placeholder="Your College Name" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Subject / Topic</label>
+            <input type="text" id="book-subject" placeholder="e.g. Data Structures, DBMS" required />
+          </div>
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" id="book-date" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Type of Work</label>
+          <select id="book-type" required>
+            <option value="">Select work type</option>
+            <option>Assignment</option>
+            <option>Project Report</option>
+            <option>Lab Manual</option>
+            <option>Notes / Summary</option>
+            <option>Viva Preparation</option>
+            <option>Research Paper</option>
+            <option>Presentation</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Special Requirements</label>
+          <textarea id="book-requirements" rows="3"
+            placeholder="Describe your requirements, word count, formatting needs, deadline, etc."></textarea>
+          <div class="file-upload-wrap">
+            <label class="file-upload-btn" for="book-files">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="17,8 12,3 7,8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Upload Files
+            </label>
+            <input type="file" id="book-files" multiple accept="*/*" style="display:none;" onchange="showFileNames(this)" />
+            <span class="file-names" id="file-names">No files chosen</span>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary full-width">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal-overlay" id="paymentModal" onclick="closeModalOutside(event, 'paymentModal')">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('paymentModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Payment</h2>
+      <div class="payment-section">
+        <div class="payment-summary">
+          <p class="pay-plan-name">Monthly Subscription</p>
+          <p class="pay-price">₹300<span>/month</span></p>
+        </div>
+        <div class="payment-methods">
+          <p class="pm-label">Select Payment Method</p>
+          <div class="pm-options">
+            <button class="pm-btn active" onclick="selectPayMethod(this, 'upi')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M2 10h20" stroke="currentColor" stroke-width="2" />
+              </svg>
+              UPI
+            </button>
+            <button class="pm-btn" onclick="selectPayMethod(this, 'cod')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Cash on Delivery
+            </button>
+          </div>
+        </div>
+        <form onsubmit="processPayment(event)" class="modal-form">
+          <div id="upi-form">
+            <div class="form-group">
+              <label>UPI ID</label>
+              <input type="text" placeholder="yourname@upi" />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary full-width">Pay ₹300</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" onclick="closeModalOutside(event, 'settingsModal')">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('settingsModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Settings</h2>
+      <div class="settings-list">
+        <div class="setting-item">
+          <div>
+            <p class="setting-name">Email Notifications</p>
+            <p class="setting-desc">Receive updates about orders</p>
+          </div>
+          <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-item">
+          <div>
+            <p class="setting-name">WhatsApp Alerts</p>
+            <p class="setting-desc">Get delivery alerts on WhatsApp</p>
+          </div>
+          <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-item">
+          <div>
+            <p class="setting-name">Promotional Offers</p>
+            <p class="setting-desc">Receive special discount offers</p>
+          </div>
+          <label class="toggle-switch"><input type="checkbox" /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-item">
+          <div>
+            <p class="setting-name">Dark Mode</p>
+            <p class="setting-desc">Toggle website appearance</p>
+          </div>
+          <label class="toggle-switch"><input type="checkbox" onchange="toggleTheme(this)" /><span
+              class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <button class="btn-primary full-width mt-16" onclick="closeModal('settingsModal')">Save Settings</button>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div class="modal-overlay" id="helpModal" onclick="closeModalOutside(event, 'helpModal')">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('helpModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Help & Support</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">How do I book a slot? <span>+</span></button>
+          <p class="faq-a">Select your course from the Courses section, click "Book a Slot", fill in your requirements
+            and confirm your booking.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What is the delivery time? <span>+</span></button>
+          <p class="faq-a">Standard delivery is within 24-48 hours. Rush delivery (12 hours) is available for Ultimate
+            plan subscribers.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Can I request revisions? <span>+</span></button>
+          <p class="faq-a">Yes! Pro and Ultimate plan subscribers get unlimited revisions. Starter plan includes 1 free
+            revision.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Is my data secure? <span>+</span></button>
+          <p class="faq-a">Absolutely. We use bank-grade encryption and never share your personal data or order details
+            with third parties.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">How do I get a refund? <span>+</span></button>
+          <p class="faq-a">If you're not satisfied, contact us within 7 days. We offer full refunds for incomplete or
+            incorrect deliveries.</p>
+        </div>
+      </div>
+      <div class="help-contact">
+        <p>Still need help? <a href="mailto:vishwakarmalucky6673@gmail.com">Email us</a> or call <a href="tel:+919608675705">+91
+            9608675705</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms Modal -->
+  <div class="modal-overlay" id="termsModal" onclick="closeModalOutside(event, 'termsModal')">
+    <div class="modal modal-tall" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('termsModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Terms & Conditions</h2>
+      <div class="terms-content">
+        <h4>1. Acceptance of Terms</h4>
+        <p>By using NOTEMATE's services, you agree to these Terms & Conditions. Please read them carefully before
+          proceeding.</p>
+        <h4>2. Academic Integrity</h4>
+        <p>NOTEMATE provides reference and study materials only. Students are solely responsible for how they use this
+          content in compliance with their institution's academic integrity policy.</p>
+        <h4>3. Services</h4>
+        <p>We provide notes, assignments, project reports, and academic guidance services. All work is original and
+          created by qualified experts.</p>
+        <h4>4. Payment & Refunds</h4>
+        <p>Payments are processed securely. Refund requests are handled within 7 business days subject to our refund
+          policy.</p>
+        <h4>5. Privacy</h4>
+        <p>User data is handled per our Privacy Policy. We do not sell or share your personal information with third
+          parties.</p>
+        <h4>6. Intellectual Property</h4>
+        <p>All content delivered to you becomes your property upon full payment. NOTEMATE retains no rights to resell
+          your delivered content.</p>
+        <h4>7. Modifications</h4>
+        <p>NOTEMATE reserves the right to update these terms. Continued use of the service constitutes acceptance of
+          updated terms.</p>
+      </div>
+      <button class="btn-primary full-width mt-16" onclick="closeModal('termsModal')">I Understand</button>
+    </div>
+  </div>
+
+  <!-- Privacy Modal -->
+  <div class="modal-overlay" id="privacyModal" onclick="closeModalOutside(event, 'privacyModal')">
+    <div class="modal modal-tall" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('privacyModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Privacy Policy</h2>
+      <div class="terms-content">
+        <h4>Data Collection</h4>
+        <p>We collect only necessary information: name, email, course details, and payment data (processed by secure
+          payment gateways).</p>
+        <h4>Data Usage</h4>
+        <p>Your data is used only to fulfill orders, send delivery notifications, and provide customer support.</p>
+        <h4>Data Protection</h4>
+        <p>We use 256-bit SSL encryption and comply with India's IT Act and upcoming DPDP Act regulations.</p>
+        <h4>Cookies</h4>
+        <p>We use essential cookies for session management and analytics. You can disable non-essential cookies in your
+          browser.</p>
+        <h4>Third Parties</h4>
+        <p>We do not sell your data. Payment is processed by Razorpay / PayU which have their own privacy policies.</p>
+      </div>
+      <button class="btn-primary full-width mt-16" onclick="closeModal('privacyModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Refund Modal -->
+  <div class="modal-overlay" id="refundModal" onclick="closeModalOutside(event, 'refundModal')">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" onclick="closeModal('refundModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Refund Policy</h2>
+      <div class="terms-content">
+        <h4>Full Refund</h4>
+        <p>Available if work is not delivered within the promised timeframe or if quality does not match described
+          standards.</p>
+        <h4>Partial Refund</h4>
+        <p>Available if partial work is delivered or if revisions do not address the original requirements.</p>
+        <h4>No Refund</h4>
+        <p>After 7 days of delivery if no issues were raised, or if cancellation is made after work has commenced.</p>
+        <h4>Refund Process</h4>
+        <p>Email vishwakarmalucky6673@gmail.com with your order number. Refunds are processed within 5-7 business days to your
+          original payment method.</p>
+      </div>
+      <button class="btn-primary full-width mt-16" onclick="closeModal('refundModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Admin Access Modal -->
+  <div class="modal-overlay" id="adminAccessModal" onclick="closeModalOutside(event, 'adminAccessModal')">
+    <div class="modal" role="dialog" aria-modal="true" style="max-width:360px;">
+      <button class="modal-close" onclick="closeModal('adminAccessModal')" aria-label="Close">×</button>
+      <h2 class="modal-title">Admin Access</h2>
+      <p class="modal-subtitle">Enter admin password to continue</p>
+      <form onsubmit="submitAdminAccess(event)" class="modal-form">
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-eye-wrap">
+            <input type="password" id="admin-access-pwd" placeholder="••••••••" required autofocus />
+            <button type="button" class="eye-btn" onclick="togglePassword('admin-access-pwd', this)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <p class="al-error hidden" id="admin-access-error" style="margin-bottom:12px;">Incorrect password.</p>
+        <button type="submit" class="btn-primary full-width">Enter Admin Panel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Toast -->
+  <div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <span id="toast-message">Action completed successfully!</span>
+  </div>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top-btn" id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+    aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </button>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="database.sql.js"></script>
+  <script src="db.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
