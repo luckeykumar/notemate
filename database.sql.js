@@ -61,6 +61,7 @@ const NM_SQL = (() => {
       created_at  TEXT NOT NULL,
       FOREIGN KEY (user_id) REFERENCES users(id)
     );
+
   `;
 
   /* ══════════════════════════════════════════════
@@ -117,6 +118,7 @@ const NM_SQL = (() => {
       selectEmail: `SELECT * FROM contacts WHERE LOWER(email) = LOWER(?) ORDER BY created_at DESC`,
       delete:      `DELETE FROM contacts WHERE id = ?`,
     },
+
   };
 
   /* ══════════════════════════════════════════════

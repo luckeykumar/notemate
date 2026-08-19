@@ -320,6 +320,29 @@ input, select, textarea { font-family: inherit; }
   overflow: hidden;
 }
 
+.email-agent-card { margin-top: 24px; }
+.agent-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 20px;
+}
+.agent-summary strong { display: block; font-size: 0.9rem; }
+.agent-summary p { color: var(--text2); font-size: 0.78rem; margin-top: 3px; word-break: break-all; }
+.agent-status-dot {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+  background: #ffc800;
+  box-shadow: 0 0 0 4px rgba(255,200,0,0.12);
+}
+.agent-status-dot.delivered { background: #00c864; box-shadow: 0 0 0 4px rgba(0,200,100,0.12); }
+.agent-status-dot.failed { background: #ff4444; box-shadow: 0 0 0 4px rgba(255,68,68,0.12); }
+.agent-badge-delivered { background: rgba(0,200,100,0.12); color: #00c864; }
+.agent-badge-failed { background: rgba(255,68,68,0.12); color: #ff4444; }
+.agent-badge-pending, .agent-badge-configured { background: rgba(255,200,0,0.12); color: #ffc800; }
+
 .card-header {
   display: flex;
   align-items: center;

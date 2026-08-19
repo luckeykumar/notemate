@@ -70,6 +70,10 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Login Activity
         </button>
+        <button class="nav-item" onclick="showTab('email-agent', this)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/></svg>
+          Email Agent
+        </button>
       </nav>
 
       <button class="sidebar-logout" onclick="adminLogout()">
@@ -122,7 +126,7 @@
               <p class="stat-value" id="stat-contacts">0</p>
             </div>
           </div>
-          <div class="stat-card stat-card-link" onclick="showTab('activity', document.querySelectorAll('.nav-item')[4])">
+          <div class="stat-card stat-card-link" onclick="showTab('activity', document.querySelectorAll('.nav-item')[5])">
             <div class="stat-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -143,6 +147,19 @@
               <thead><tr><th>Name</th><th>Course</th><th>Type</th><th>Date</th><th>Status</th></tr></thead>
               <tbody id="recent-bookings-body"></tbody>
             </table>
+          </div>
+        </div>
+        <div class="section-card email-agent-card">
+          <div class="card-header">
+            <h3>Email Agent</h3>
+            <button class="view-all-btn" onclick="showTab('email-agent', document.querySelectorAll('.nav-item')[5])">View Details</button>
+          </div>
+          <div class="agent-summary">
+            <span class="agent-status-dot" id="dashboard-agent-status-dot"></span>
+            <div>
+              <strong id="dashboard-agent-status">Checking connection...</strong>
+              <p id="dashboard-agent-last-delivery">No form deliveries recorded yet.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -206,6 +223,29 @@
             <table>
               <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Action</th><th>Timestamp</th></tr></thead>
               <tbody id="activity-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── EMAIL AGENT TAB ── -->
+      <section class="tab hidden" id="tab-email-agent">
+        <div class="section-card email-agent-card">
+          <div class="card-header">
+            <h3>Workflow Delivery</h3>
+            <button class="view-all-btn" onclick="loadEmailAgent()">Refresh</button>
+          </div>
+          <div class="agent-summary">
+            <span class="agent-status-dot" id="agent-status-dot"></span>
+            <div>
+              <strong id="agent-status">Checking connection...</strong>
+              <p id="agent-webhook-url"></p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Type</th><th>Status</th><th>Submitted</th></tr></thead>
+              <tbody id="email-agent-body"></tbody>
             </table>
           </div>
         </div>

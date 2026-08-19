@@ -5,6 +5,10 @@
 
 'use strict';
 
+/* Set this to the n8n Webhook URL after activating the workflow. */
+const EMAIL_AGENT_WEBHOOK_URL = 'https://luckkyy.app.n8n.cloud/webhook/notemate-email-agent';
+const EMAIL_AGENT_LOG_KEY = 'nm_email_agent_log';
+
 /* ─── State ─── */
 const state = {
   user: null,
@@ -186,7 +190,7 @@ function filterCourses(filter, btn) {
 /* ─────────────────── TESTIMONIALS ─────────────────── */
 function renderTestimonials() {
   const track = document.getElementById('testimonials-track');
-  const dotsContainer = document.getElementById('slider-dots');
+          type: document.getElementById('book-type').value,
 
   track.innerHTML = testimonials.map(t => `
     <div class="testimonial-card">
@@ -512,6 +516,7 @@ function submitBooking(e) {
 
   if (files.length === 0) {
     NM_DB.Bookings.create({ ...booking, files: null });
+    notifyEmailAgent({ eventType: 'booking', ...booking, files: [] });
     closeModal('bookingModal');
     showToast(`Thank you, ${booking.name.split(' ')[0]}! We will reach you soon. 📞`);
     form.reset();
@@ -528,6 +533,11 @@ function submitBooking(e) {
 
   Promise.all(readers).then(encoded => {
     NM_DB.Bookings.create({ ...booking, files: JSON.stringify(encoded) });
+    notifyEmailAgent({
+      eventType: 'booking',
+      ...booking,
+      files: encoded.map(file => ({ name: file.name, type: file.type, size: file.data.length }))
+    });
     closeModal('bookingModal');
     showToast(`Thank you, ${booking.name.split(' ')[0]}! We will reach you soon. 📞`);
     form.reset();
@@ -615,8 +625,54 @@ function submitContactForm(e) {
     userId: state.user?.id || null,
   };
   NM_DB.Contacts.create(contact);
+  notifyEmailAgent({ eventType: 'inquiry', ...contact });
   showToast(`Message sent, ${contact.name}! We'll get back to you within 24 hours. 📩`);
   e.target.reset();
+}
+
+function notifyEmailAgent(payload) {
+  if (!EMAIL_AGENT_WEBHOOK_URL) return;
+
+  const delivery = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    kind: payload.eventType === 'booking' ? 'Booking' : 'Inquiry',
+    status: 'Pending',
+    createdAt: new Date().toISOString()
+  };
+  saveEmailAgentDelivery(delivery);
+
+  fetch(EMAIL_AGENT_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...payload,
+      source: 'notemate-web',
+      submittedAt: new Date().toISOString()
+    }),
+    keepalive: true
+  }).then(response => {
+    updateEmailAgentDelivery(delivery.id, response.ok ? 'Delivered' : 'Failed');
+  }).catch(error => {
+    updateEmailAgentDelivery(delivery.id, 'Failed');
+    console.error('Email agent notification failed:', error);
+  });
+}
+
+function getEmailAgentDeliveries() {
+  try { return JSON.parse(localStorage.getItem(EMAIL_AGENT_LOG_KEY) || '[]'); }
+  catch (error) { return []; }
+}
+
+function saveEmailAgentDelivery(delivery) {
+  const deliveries = [delivery, ...getEmailAgentDeliveries()].slice(0, 50);
+  localStorage.setItem(EMAIL_AGENT_LOG_KEY, JSON.stringify(deliveries));
+}
+
+function updateEmailAgentDelivery(id, status) {
+  const deliveries = getEmailAgentDeliveries().map(delivery =>
+    delivery.id === id ? { ...delivery, status } : delivery
+  );
+  localStorage.setItem(EMAIL_AGENT_LOG_KEY, JSON.stringify(deliveries));
 }
 
 function togglePassword(inputId, btn) {

@@ -7,6 +7,8 @@
 
 const ADMIN_CREDS = { username: 'admin', password: 'notemate@2025' };
 const ADMIN_SESSION_KEY = 'nm_admin_session';
+const EMAIL_AGENT_WEBHOOK_URL = 'https://luckkyy.app.n8n.cloud/webhook/notemate-email-agent';
+const EMAIL_AGENT_LOG_KEY = 'nm_email_agent_log';
 let isAdminDbReady = false;
 
 /* ══════════════════════════════════════════════
@@ -57,6 +59,7 @@ function showPanel() {
       loadBookings();
       loadContacts();
       loadActivity();
+      loadEmailAgent();
     }).catch(err => {
       console.error('Admin DB retry failed:', err);
       alert('Unable to load admin data. Please refresh the page.');
@@ -68,6 +71,7 @@ function showPanel() {
   loadBookings();
   loadContacts();
   loadActivity();
+  loadEmailAgent();
 }
 
 function toggleAdminPassword() {
@@ -99,6 +103,7 @@ const TAB_TITLES = {
   bookings: 'Bookings',
   contacts: 'Contacts',
   activity: 'Login Activity',
+  'email-agent': 'Email Agent',
 };
 
 function showTab(name, btn) {
@@ -109,11 +114,42 @@ function showTab(name, btn) {
   btn.classList.add('active');
   document.getElementById('page-title').textContent = TAB_TITLES[name];
 
-  const loaders = { users: loadUsers, bookings: loadBookings, contacts: loadContacts, activity: loadActivity };
+  const loaders = { users: loadUsers, bookings: loadBookings, contacts: loadContacts, activity: loadActivity, 'email-agent': loadEmailAgent };
   if (loaders[name]) loaders[name]();
 
   // Close sidebar on mobile
   document.getElementById('sidebar').classList.remove('open');
+}
+
+function loadEmailAgent() {
+  const deliveries = getEmailAgentDeliveries();
+  const configured = Boolean(EMAIL_AGENT_WEBHOOK_URL);
+  const latest = deliveries[0];
+  const status = configured ? (latest?.status || 'Configured') : 'Not configured';
+  const dotClass = status === 'Failed' ? 'failed' : status === 'Delivered' ? 'delivered' : 'pending';
+
+  ['agent-status-dot', 'dashboard-agent-status-dot'].forEach(id => {
+    const dot = document.getElementById(id);
+    if (dot) dot.className = `agent-status-dot ${dotClass}`;
+  });
+  ['agent-status', 'dashboard-agent-status'].forEach(id => {
+    const label = document.getElementById(id);
+    if (label) label.textContent = `Webhook ${status}`;
+  });
+  const url = document.getElementById('agent-webhook-url');
+  if (url) url.textContent = EMAIL_AGENT_WEBHOOK_URL || 'Add the n8n webhook URL in the application settings.';
+  const last = document.getElementById('dashboard-agent-last-delivery');
+  if (last) last.textContent = latest ? `${latest.kind} • ${formatDate(latest.createdAt)}` : 'No form deliveries recorded yet.';
+
+  const body = document.getElementById('email-agent-body');
+  if (body) body.innerHTML = deliveries.length
+    ? deliveries.map(delivery => `<tr><td>${delivery.kind}</td><td><span class="badge agent-badge-${delivery.status.toLowerCase()}">${delivery.status}</span></td><td>${formatDate(delivery.createdAt)}</td></tr>`).join('')
+    : '<tr class="empty-row"><td colspan="3">No workflow deliveries yet.</td></tr>';
+}
+
+function getEmailAgentDeliveries() {
+  try { return JSON.parse(localStorage.getItem(EMAIL_AGENT_LOG_KEY) || '[]'); }
+  catch (error) { return []; }
 }
 
 /* ══════════════════════════════════════════════

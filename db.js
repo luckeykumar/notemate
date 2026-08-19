@@ -123,7 +123,7 @@ const NM_DB = (() => {
     return {
       users:    NM_SQL.exec(NM_SQL.QUERIES.counts.users)[0]?.total    ?? 0,
       bookings: NM_SQL.exec(NM_SQL.QUERIES.counts.bookings)[0]?.total ?? 0,
-      contacts: NM_SQL.exec(NM_SQL.QUERIES.counts.contacts)[0]?.total ?? 0,
+      contacts: NM_SQL.exec(NM_SQL.QUERIES.contacts)[0]?.total ?? 0,
       activity: NM_SQL.exec(NM_SQL.QUERIES.counts.activity)[0]?.total ?? 0,
     };
   }
