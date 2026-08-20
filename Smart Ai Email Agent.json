@@ -1,0 +1,324 @@
+{
+  "name": "Smart ai Email Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "notemate-email-agent",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        240
+      ],
+      "id": "notemate-webhook-intake",
+      "name": "NOTEMATE Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $json.body || $json;\nconst eventType = input.eventType || 'inquiry';\nconst label = eventType === 'booking' ? 'Booking request' : 'Customer inquiry';\nconst details = eventType === 'booking'\n  ? `Name: ${input.name || ''}\\nEmail: ${input.email || ''}\\nPhone: ${input.phone || ''}\\nCourse: ${input.course || ''}\\nSubject: ${input.subject || ''}\\nPreferred date: ${input.date || ''}\\nWork type: ${input.type || ''}\\nRequirements: ${input.requirements || ''}`\n  : `Name: ${input.name || ''}\\nEmail: ${input.email || ''}\\nCourse: ${input.course || ''}\\nMessage: ${input.message || ''}`;\nreturn [{ json: { snippet: `[${label}]\\n${details}`, Subject: `[NOTEMATE] ${label}`, source: input.source || 'email' } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        120
+      ],
+      "id": "notemate-normalize-email",
+      "name": "Normalize Email"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b3a4104f-7b94-46dd-a9f4-a6c8419ab513",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UOJ85FiOsJ6xdg9s",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "book a slot",
+              "description": "when any email come with the text inside include new bookings it will separate it"
+            },
+            {
+              "category": "inquiry",
+              "description": "if any email include words inquiry or customer is asking any type of question , need to separate it"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "e22fd993-a859-440f-9e14-ca3f41772cf6",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $('Normalize Email').item.json.Subject }}",
+        "message": "={{ $json.output[0].content[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        -32
+      ],
+      "id": "6d8ea653-4a56-404d-babf-d0526f4c663e",
+      "name": "Create a draft",
+      "webhookId": "03d89b8b-dd8f-4388-8e91-7368e2b6b9b6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UOJ85FiOsJ6xdg9s",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $('Normalize Email').item.json.Subject }}",
+        "message": "={{ $('Normalize Email').item.json.snippet }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        208
+      ],
+      "id": "bef9e189-b3b4-4455-9f84-58f07791b402",
+      "name": "Create a draft1",
+      "webhookId": "b34fc158-0870-4694-8749-2c1fb24389d9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UOJ85FiOsJ6xdg9s",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-flash-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-flash-preview",
+          "cachedResultUrl": ""
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=you act as a copywriter and my personal gmail assisatance , you will reply to this email:\n {{ $('Normalize Email').item.json.snippet }}\n\nyou have to give me reply in two type, one you give subject line and one inner email response",
+              "role": "model"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        -32
+      ],
+      "id": "8ee9c807-62ef-49a0-9ab7-3833d8c7810c",
+      "name": "Message a model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "CSzStmUQw1pJigTF",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-flash-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-flash-preview",
+          "cachedResultUrl": ""
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=you act as a copywriter and my personal gmail assisatance , you will reply to this email:\n{{ $('Normalize Email').item.json.snippet }}\n\n\nyou have to give me reply in two type, one you give subject line and one inner email response",
+              "role": "model"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        592,
+        208
+      ],
+      "id": "bf11baf5-ba66-45ac-95bd-c2e70925cc86",
+      "name": "Message a model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "CSzStmUQw1pJigTF",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        224
+      ],
+      "id": "dfe0d61d-ecb0-4e69-a786-42c4be30cee0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "CSzStmUQw1pJigTF",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Normalize Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NOTEMATE Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Email": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Message a model2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model2": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model3": {
+      "main": [
+        [
+          {
+            "node": "Create a draft1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "04f84fd5-ebcf-433d-a7ff-f73cda17afc3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0eab97905bae3836066cb56be9ca674fc780f22936f45419e8b23e4449d61f04"
+  },
+  "nodeGroups": [],
+  "id": "1AWzR4hQHtqE6pAE",
+  "tags": []
+}
