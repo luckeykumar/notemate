@@ -1429,10 +1429,6 @@ body.light-mode {
   white-space: nowrap;
 }
 
-  position: relative;
-  display: flex;
-  align-items: center;
-}
 .input-eye-wrap input {
   padding-right: 44px;
 }
