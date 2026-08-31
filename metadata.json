@@ -1,0 +1,6 @@
+{
+  "name": "NoteMate",
+  "description": "Premium Academic Writing & Note Service for College Students. Explore courses, book writing slots, manage assignments, and track inquiries.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
